@@ -5,20 +5,31 @@
         <title>lyricsTalk</title>
         
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
- 
+         <link rel="stylesheet" type="text/css" href="style.css">
         <!-- Bootstrap Core JavaScript -->
         <script src="jquery/jquery.min.js"></script>        
     </head>
         
     <body>
-        <form class="form-inline">
-          <div class="form-group mx-sm-3 mb-2">
-            <label >Enter</label>
-            <input class="form-control" id="inputName" placeholder="Song Name">
-          </div>
-          <button class="btn btn-primary mb-2" id="button1">Go</button>
-        </form>
-        <h1 id="display"> </h1>
+        <div class="header">
+            <h1>LyricsTalk</h1>
+        </div>
+        <div class="inputField">
+            <form class="enter form-inline">
+              <div class="form-group mx-sm-3 mb-2">
+                <label >Enter</label>
+                <input class="form-control" id="inputName" placeholder="Song Name">
+              </div>
+              <button class="btn btn-primary mb-2" id="button1">Go</button>
+              <button class="btn btn-primary mb-2" id="speak">SPEAK</button>
+            </form>
+        </div>
+        <div class="infoField">
+            <p id="info"> </p>
+        </div>
+        <div class="displayField">
+            <p id="display"> </p>
+        </div>
     
     <script src="jquery/jquery.js"></script>
     <script src="script.js"></script>

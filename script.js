@@ -17,28 +17,41 @@ $( document ).ready(function() {
    jsonpCallback: 'jsonp_callback',
    contentType: 'application/json',
    success: function(response) {
-    console.log("pass");
-      let trackId=response.body.track_list[0].track.track_id;
-      $.ajax({
-       method: "GET",
-       url: "https://api.musixmatch.com/ws/1.1/track.lyrics.get?",
-       data: {
-        apikey: key,
-        track_id: trackId,
-        format:"jsonp",
-        callback:"jsonp_callback"
-       },
-       dataType: "jsonp",
-       jsonpCallback: 'jsonp_callback',
-       contentType: 'application/json',
-       success: function(page) {
-        console.log("hi");
-          $("body").append(page.body.lyrics.lyrics_body);
-       },
-       error: function(jqXHR, textStatus, errorThrown) {
-           console.log(textStatus);
-       }
-      });
+
+     console.log("pass");
+     console.log(response);
+     let random =Math.floor(Math.random()*response.message.body.track_list.length);
+       let trackId=response.message.body.track_list[random].track.track_id;
+       let trackName=response.message.body.track_list[random].track.track_name;
+       $.ajax({
+        method: "GET",
+        url: "https://api.musixmatch.com/ws/1.1/track.lyrics.get",
+        data: {
+         apikey: key,
+         track_id: trackId,
+         format:"jsonp",
+         callback:"jsonp_callback"
+        },
+        dataType: "jsonp",
+        jsonpCallback: 'jsonp_callback',
+        contentType: 'application/json',
+        success: function(page) {
+         console.log("hi");
+         console.log(page);
+         if(page.message.header.status_code===404){
+           $("#display").text("No lyrics found, please try another song or click Go again.");
+         }
+         else{
+           $("#info").text("Title: "+trackName);
+           $("#display").text("Lyric: "+page.message.body.lyrics.lyrics_body.substring(0,page.message.body.lyrics.lyrics_body.indexOf("...")+3));
+        
+         }
+         },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+       });
+    
    },
    error: function(jqXHR, textStatus, errorThrown) {
        console.log(textStatus);
@@ -46,6 +59,20 @@ $( document ).ready(function() {
   });
   
  });
+ 
+ $("#speak").click(function(e){
+  e.preventDefault();
+    var msg = new window.SpeechSynthesisUtterance();
+    var voices =window.speechSynthesis.getVoices();
+    console.log(voices);
+
+    msg.voice = voices[10];
+    msg.text = document.getElementById("display").innerHTML;
+    msg.lang = 'en-US';
+    
+    window.speechSynthesis.speak(msg);
+    });
+
 });
 
 
